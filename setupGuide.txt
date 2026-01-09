@@ -1,0 +1,122 @@
+# Playwright Python Automation Framework Setup Guide
+
+This document summarizes the full setup and configuration of a professional Playwright automation framework using Python, including all commands used. You can use this as a reference or send it via email.
+
+| Step                                      | Purpose                               | Command / Action                                                                                                                                                                                     |
+| ----------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Check Python Version**               | Ensure Python is installed            | `python3 --version`                                                                                                                                                                                  |
+| **2. Check Node.js Version**              | Required by Playwright                | `node --version`                                                                                                                                                                                     |
+| **3. Clone Repository**                   | Get project code locally              | `git clone <repo_url>`<br>`cd <project_name>`                                                                                                                                                        |
+| **4. Create Virtual Environment**         | Isolate dependencies                  | `python3 -m venv venv`                                                                                                                                                                               |
+| **5. Activate Virtual Environment**       | Use isolated Python interpreter       | `source venv/bin/activate` (macOS/Linux)                                                                                                                                                             |
+| **6. Install Required Packages**          | Install framework dependencies        | `python3 -m pip install playwright pytest pytest-html python-dotenv`                                                                                                                                 |
+| **7. Install Playwright Browsers**        | Install Chromium, Firefox, WebKit     | `python3 -m playwright install`                                                                                                                                                                      |
+| **8. Generate requirements.txt**          | Save dependencies for reproducibility | `python3 -m pip freeze > requirements.txt`                                                                                                                                                           |
+| **9. Create pytest.ini**                  | Configure pytest                      | `touch pytest.ini`<br>Edit with content:<br>`[pytest]`                                                                                                                                               |
+| `addopts = -v --html=reports/report.html` |                                       |                                                                                                                                                                                                      |
+| `testpaths = tests`                       |                                       |                                                                                                                                                                                                      |
+| **10. Create README.md**                  | Project overview & instructions       | `touch README.md`<br>Add content describing project, setup, test execution, structure                                                                                                                |
+| **11. Create .gitignore**                 | Exclude unnecessary files from Git    | `touch .gitignore`<br>Add content:<br>`venv/`                                                                                                                                                        |
+| `__pycache__/`                            |                                       |                                                                                                                                                                                                      |
+| `.playwright/`                            |                                       |                                                                                                                                                                                                      |
+| `reports/`                                |                                       |                                                                                                                                                                                                      |
+| `.env`                                    |                                       |                                                                                                                                                                                                      |
+| `.DS_Store`                               |                                       |                                                                                                                                                                                                      |
+| **12. Verify Git Status**                 | Ensure correct files tracked          | `git status`                                                                                                                                                                                         |
+| **13. Commit to GitHub**                  | Save initial setup                    | `git add .`<br>`git commit -m "Initial Playwright Python framework setup"`<br>`git push`                                                                                                             |
+| **14. Recreate Setup on New Machine**     | Professional reproducibility          | `git clone <repo_url>`<br>`cd <project_name>`<br>`python3 -m venv venv`<br>`source venv/bin/activate`<br>`python3 -m pip install -r requirements.txt`<br>`python3 -m playwright install`<br>`pytest` |
+
+## Notes / Best Practices
+
+* Always activate venv before running any Python commands.
+* Never commit `venv/` or `.playwright/` directories.
+* Use `python3 -m pip` instead of `pip` to avoid PATH issues.
+* Recreate venv if it becomes broken instead of trying to fix it.
+* Keep `requirements.txt` updated whenever dependencies change.
+* `.gitignore` ensures repo stays clean and lightweight.
+
+This setup ensures a **reproducible, clean, and professional framework** suitable for corporate and interview environments.
+
+
+part 2:
+
+STEP
+WHAT WE DID
+FILE / PLACE
+COMMAND / CONFIG
+PURPOSE
+1
+Created & activated virtual environment
+Project root
+python3 -m venv venvsource venv/bin/activate
+Isolate Python, pytest, playwright
+2
+Installed required tools
+venv
+pip install pytest playwright pytest-html
+Enable test execution & reports
+3
+Selected Python interpreter
+VS Code
+Select venv/bin/python
+Makes pytest available to VS Code
+4
+Enabled pytest in VS Code
+.vscode/settings.json
+"python.testing.pytestEnabled": true
+Force pytest usage
+5
+Disabled unittest
+.vscode/settings.json
+"python.testing.unittestEnabled": false
+Avoid conflicts
+6
+Set test discovery path
+.vscode/settings.json
+"python.testing.pytestArgs": ["tests"]
+Discover all tests
+7
+Configured pytest discovery
+pytest.ini
+testpaths = testspython_files = test_*.pypython_functions = test_*
+Dynamic multi-file support
+8
+Verified test structure
+tests/
+test_example.py
+pytest-compatible naming
+9
+Used Testing Panel (🧪)
+VS Code UI
+Click 🧪 icon → Run
+Runs tests via pytest
+10
+Avoided top Run button
+VS Code editor
+❌ Do not use ▶️
+Runs plain python only
+11
+Verified fixture loading
+conftest.py
+Auto-loaded by pytest
+Enables browser, screenshots
+12
+Verified screenshot capture
+On failure
+PNG files created
+Evidence for failures
+13
+Generated HTML report
+Terminal / Testing Panel
+pytest --html=reports/report.html
+Execution report
+14
+Understood annotation issue
+VS Code
+Optional / unreliable
+Testing Panel is primary
+15
+Confirmed execution flow
+End-to-end
+pytest → fixtures → tests → report
+Corporate-ready setup
