@@ -120,3 +120,6 @@ Confirmed execution flow
 End-to-end
 pytest → fixtures → tests → report
 Corporate-ready setup
+
+16
+add waits file and config file. Config will help to reduce hardcoding details in test or pytest.ini
