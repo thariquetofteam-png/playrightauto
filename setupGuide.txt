@@ -123,3 +123,142 @@ Corporate-ready setup
 
 16
 add waits file and config file. Config will help to reduce hardcoding details in test or pytest.ini
+
+============================================================
+PLAYWRIGHT LOCATORS – COMPLETE CHEAT SHEET (TEXT VERSION)
+============================================================
+
+NOTE:
+- page.locator() → CSS selector by default
+- XPath must be explicitly written
+- Playwright recommends Role & Text locators first
+
+------------------------------------------------------------
+1. BASIC LOCATOR TYPES
+------------------------------------------------------------
+
+Locator Type | Syntax | Example | When to Use
+------------------------------------------------------------
+ID | #id | #login_field | BEST choice if available
+Class | .class | .btn-primary | Use if class is unique
+Tag | tag | input | Rarely alone
+Attribute | tag[attr=value] | input[name="commit"] | Very common
+Any Attribute | [attr=value] | [data-testid="login"] | Test-friendly
+
+------------------------------------------------------------
+2. CSS SELECTOR EXAMPLES (DEFAULT)
+------------------------------------------------------------
+
+Purpose | Syntax | Example
+------------------------------------------------------------
+By ID | #id | #password
+By Class | .class | .btn-login
+By Tag + Attr | tag[attr=value] | input[type="submit"]
+Multiple Attrs | tag[a][b] | input[type="submit"][name="commit"]
+Parent → Child | parent child | form input
+Direct Child | parent > child | form > input
+Nth Child | :nth-child(n) | li:nth-child(2)
+Contains (partial) | [attr*="val"] | input[name*="commit"]
+Starts With | [attr^="val"] | input[id^="login"]
+Ends With | [attr$="val"] | input[id$="field"]
+
+------------------------------------------------------------
+3. XPATH SELECTORS (USE ONLY WHEN NEEDED)
+------------------------------------------------------------
+
+Purpose | Syntax | Example
+------------------------------------------------------------
+Any Element | //tag | //input
+By Attribute | //tag[@attr='v'] | //input[@name='commit']
+By Text | //tag[text()='Sign in'] | //button[text()='Sign in']
+Partial Text | contains() | //button[contains(text(),'Sign')]
+AND Condition | and | //input[@type='submit' and @name='commit']
+Parent → Child | //parent//child | //form//input
+Following Sibling | following-sibling | //label/following-sibling::input
+Index | [n] | (//button)[1]
+
+❌ Avoid absolute XPath like:
+html/body/div[2]/div/button
+
+------------------------------------------------------------
+4. PLAYWRIGHT SPECIAL LOCATORS (RECOMMENDED)
+------------------------------------------------------------
+
+Type | Syntax | Example | Best Use
+------------------------------------------------------------
+By Role | get_by_role | get_by_role("button", name="Sign in") | BEST PRACTICE
+By Text | get_by_text | get_by_text("Sign in") | Visible text
+By Label | get_by_label | get_by_label("Username") | Forms
+By Placeholder | get_by_placeholder | get_by_placeholder("Email") | Inputs
+By Title | get_by_title | get_by_title("Search") | Icons/tooltips
+By Test ID | get_by_test_id | get_by_test_id("login-btn") | Automation safe
+
+------------------------------------------------------------
+5. CHAINING & SCOPING LOCATORS
+------------------------------------------------------------
+
+Purpose | Syntax | Example
+------------------------------------------------------------
+Inside Section | parent.locator() | page.locator("form").locator("input")
+Menu → Item | nav >> link | page.locator("nav").get_by_text("Settings")
+Nth Element | .nth(index) | page.locator("button").nth(0)
+First Match | .first | page.locator("button").first
+Last Match | .last | page.locator("button").last
+
+------------------------------------------------------------
+6. REAL-WORLD GITHUB EXAMPLES
+------------------------------------------------------------
+
+Sign In Button (BEST):
+page.get_by_role("button", name="Sign in")
+
+Username Field:
+page.get_by_label("Username")
+page.locator("#login_field")
+
+Password Field:
+page.get_by_label("Password")
+page.locator("#password")
+
+Submit Button (CSS):
+page.locator("input[name='commit']")
+
+Submit Button (XPath):
+page.locator("//input[@name='commit']")
+
+------------------------------------------------------------
+7. WHEN TO USE WHAT (IMPORTANT)
+------------------------------------------------------------
+
+Situation | Use This
+------------------------------------------------------------
+Button / Link | get_by_role()
+Visible Text | get_by_text()
+Forms | get_by_label()
+Stable Attributes | CSS selector
+Dynamic DOM | Playwright locators
+Last Resort | XPath
+
+------------------------------------------------------------
+8. BAD vs GOOD LOCATORS
+------------------------------------------------------------
+
+❌ BAD:
+page.locator("//div[3]/button[2]")
+
+✅ GOOD:
+page.get_by_role("button", name="Submit")
+
+------------------------------------------------------------
+9. GOLDEN RULES
+------------------------------------------------------------
+
+1. Prefer Role & Text locators
+2. Avoid absolute XPath
+3. Use IDs when available
+4. Use test-id if app supports it
+5. Locators should survive UI changes
+
+============================================================
+END OF CHEAT SHEET
+============================================================
